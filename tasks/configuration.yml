@@ -8,6 +8,15 @@
     group: root
     mode: 0640
     validate: 'haproxy -f %s -c'
+#  notify: restart haproxy
+  tags:
+    - haproxy-configuration-update-file
+- name: Remove blank lines in haproxy.conf
+  replace:
+    path: /etc/haproxy/haproxy.cfg
+    regexp: '(^\s*$)'
+    replace: ''
+    validate: 'haproxy -f %s -c'
   notify: restart haproxy
   tags:
     - haproxy-configuration-update-file
